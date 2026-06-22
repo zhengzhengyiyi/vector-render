@@ -1,0 +1,28 @@
+package net.zhengzhengyiyi.renderer.gl;
+
+import net.zhengzhengyiyi.renderer.api.blaze3d.textures.AddressMode;
+import net.zhengzhengyiyi.renderer.api.blaze3d.textures.FilterMode;
+import java.util.OptionalDouble;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+@Environment(EnvType.CLIENT)
+public abstract class GpuSampler implements AutoCloseable {
+   public GpuSampler() {
+   }
+
+   public abstract AddressMode getAddressModeU();
+
+   public abstract AddressMode getAddressModeV();
+
+   public abstract FilterMode getMinFilterMode();
+
+   public abstract FilterMode getMagFilterMode();
+
+   public abstract int getMaxAnisotropy();
+
+   public abstract OptionalDouble getMaxLevelOfDetail();
+
+   @Override
+   public abstract void close();
+}

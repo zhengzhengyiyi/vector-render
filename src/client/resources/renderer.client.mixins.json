@@ -1,0 +1,21 @@
+{
+	"required": true,
+	"package": "net.zhengzhengyiyi.client.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"client": [
+		"MinecraftClientMixin",
+		"RenderSystemMixin",
+		"GameRendererMixin",
+		"WorldRendererMixin",
+		"ChunkBuilderMixin",
+		"ChunkBuilderTaskMixin",
+		"DebugHudMixin",
+		"accessor.NativeImageAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

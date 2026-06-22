@@ -1,0 +1,11 @@
+accessWidener v2 named
+
+accessible class net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$Task
+accessible method net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$Task cancel ()V
+accessible field net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$Task prioritized Z
+accessible field net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$Task cancelled Ljava/util/concurrent/atomic/AtomicBoolean;
+accessible field net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$Task field_20837 Lnet/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk;
+accessible method net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk getOrigin ()Lnet/minecraft/util/math/BlockPos;
+accessible field net/minecraft/client/texture/GlTexture glId I
+accessible method net/minecraft/client/texture/GlTextureView <init> (Lnet/minecraft/client/texture/GlTexture;II)V
+accessible method net/minecraft/client/texture/GlTexture <init> (ILjava/lang/String;Lcom/mojang/blaze3d/textures/TextureFormat;IIIIII)V
