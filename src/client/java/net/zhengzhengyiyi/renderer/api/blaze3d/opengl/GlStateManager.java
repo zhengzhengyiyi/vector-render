@@ -36,7 +36,6 @@ public class GlStateManager {
    private static final GlStateManager.LogicOpState COLOR_LOGIC = new GlStateManager.LogicOpState();
    private static final GlStateManager.ScissorTestState SCISSOR = new GlStateManager.ScissorTestState();
    private static int activeTexture;
-   private static final int TEXTURE_COUNT = 12;
    private static final GlStateManager.Texture2DState[] TEXTURES = IntStream.range(0, 12)
       .mapToObj(index -> new GlStateManager.Texture2DState())
       .toArray(GlStateManager.Texture2DState[]::new);

@@ -12,7 +12,6 @@ import java.util.Optional;
 import java.util.Map.Entry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.SharedConstants;
 import net.zhengzhengyiyi.renderer.gl.Defines;
 import net.zhengzhengyiyi.renderer.gl.UniformType;
 import net.minecraft.util.Identifier;

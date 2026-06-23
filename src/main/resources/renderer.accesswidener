@@ -9,3 +9,4 @@ accessible method net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk getO
 accessible field net/minecraft/client/texture/GlTexture glId I
 accessible method net/minecraft/client/texture/GlTextureView <init> (Lnet/minecraft/client/texture/GlTexture;II)V
 accessible method net/minecraft/client/texture/GlTexture <init> (ILjava/lang/String;Lcom/mojang/blaze3d/textures/TextureFormat;IIIIII)V
+

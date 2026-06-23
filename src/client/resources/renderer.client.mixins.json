@@ -10,6 +10,8 @@
 		"ChunkBuilderMixin",
 		"ChunkBuilderTaskMixin",
 		"DebugHudMixin",
+		"EntityRendererMixin",
+		"HeldItemRendererMixin",
 		"accessor.NativeImageAccessor"
 	],
 	"injectors": {
