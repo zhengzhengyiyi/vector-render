@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableMap;
 import net.zhengzhengyiyi.renderer.api.blaze3d.buffers.GpuBuffer;
 import net.zhengzhengyiyi.renderer.api.blaze3d.systems.CommandEncoder;
 import net.zhengzhengyiyi.renderer.api.blaze3d.systems.GpuDevice;
-import com.mojang.blaze3d.systems.RenderSystem;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import java.nio.ByteBuffer;

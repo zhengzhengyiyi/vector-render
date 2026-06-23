@@ -20,6 +20,7 @@ public class MinecraftClientMixin {
 	 * context is fully current — create the single GlBackend and register it with
 	 * RenderEngine. No second context is ever created; GL.getCapabilities() is reused.
 	 */
+	@SuppressWarnings("resource")
 	@Inject(
 		method = "<init>",
 		at = @At(

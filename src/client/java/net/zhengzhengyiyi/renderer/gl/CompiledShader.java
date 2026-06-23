@@ -9,7 +9,6 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class CompiledShader implements AutoCloseable {
-   private static final int CLOSED = -1;
    public static final CompiledShader INVALID_SHADER = new CompiledShader(-1, new Identifier("minecraft", "invalid"), ShaderType.VERTEX);
    private final Identifier id;
    private int handle;

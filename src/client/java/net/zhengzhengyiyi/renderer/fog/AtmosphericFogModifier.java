@@ -7,7 +7,6 @@ import net.minecraft.client.render.CameraSubmersionType;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)

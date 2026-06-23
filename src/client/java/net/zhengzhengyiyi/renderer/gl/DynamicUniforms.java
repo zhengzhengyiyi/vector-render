@@ -17,7 +17,6 @@ import org.joml.Vector4fc;
 public class DynamicUniforms implements AutoCloseable {
    public static final int TRANSFORMS_SIZE = new Std140SizeCalculator().putMat4f().putVec4().putVec3().putMat4f().get();
    public static final int CHUNK_SECTIONS_SIZE = new Std140SizeCalculator().putMat4f().putFloat().putIVec2().putIVec3().get();
-   private static final int DEFAULT_CAPACITY = 2;
    private final DynamicUniformStorage<DynamicUniforms.TransformsValue> transformsStorage = new DynamicUniformStorage<>(
       "Dynamic Transforms UBO", TRANSFORMS_SIZE, 2
    );

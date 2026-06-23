@@ -84,6 +84,7 @@ public class RenderPipeline {
       this.sortKey = sortKey;
    }
 
+   @SuppressWarnings("unused")
    public int getSortKey() {
       return false ? super.hashCode() * (sortKeySeed + 1) : this.sortKey;
    }
