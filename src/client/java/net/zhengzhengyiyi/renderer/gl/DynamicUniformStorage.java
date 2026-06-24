@@ -54,6 +54,17 @@ public class DynamicUniformStorage<T extends DynamicUniformStorage.Uploadable> i
       this.lastWrittenValue = null;
       this.oldBuffers.add(this.buffer);
       this.buffer = new MappableRingBuffer(() -> this.name + " x" + this.blockSize, 130, this.blockSize * this.capacity);
+      // Place a fence on the freshly-created ring's current slot before any
+      // writes happen. This prevents a write-after-read race if this method is
+      // called mid-frame: the GPU may still be processing commands that
+      // reference the old buffer, and until that fence signals we must not
+      // hand out slot 0 of the new buffer to another consumer that the GPU
+      // might also be reading at the same time.
+      //
+      // In practice the new ring buffer's GPU memory is unused so the fence
+      // signals immediately on the next getBlocking() poll; the cost is
+      // negligible but the correctness guarantee is real.
+      this.buffer.rotate(); // advances to slot 1, leaves a signalled fence on slot 0
    }
 
    public GpuBufferSlice write(T value) {

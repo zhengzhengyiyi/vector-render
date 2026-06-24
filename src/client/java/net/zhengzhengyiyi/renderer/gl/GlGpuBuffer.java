@@ -38,6 +38,22 @@ public class GlGpuBuffer extends GpuBuffer {
       POOL.malloc(id, i);
    }
 
+   /**
+    * Creates a non-owning wrapper around an existing GL buffer id.
+    *
+    * <p>Used to present vanilla {@link net.minecraft.client.gl.VertexBuffer} GL
+    * ids to the mod's pipeline/command-encoder without transferring ownership —
+    * vanilla still manages the buffer's lifecycle.
+    *
+    * <p>{@link #close()} on the returned instance is a no-op.
+    */
+   public static GlGpuBuffer wrapExternal(int glId, @GpuBuffer.Usage int usage, long size) {
+      return new GlGpuBuffer(null, null, usage, size, glId, null) {
+         @Override public boolean isClosed() { return false; }
+         @Override public void close() { /* not owned — do not delete */ }
+      };
+   }
+
    @Override
    public boolean isClosed() {
       return this.closed;

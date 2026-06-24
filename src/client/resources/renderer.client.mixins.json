@@ -7,12 +7,14 @@
 		"RenderSystemMixin",
 		"GameRendererMixin",
 		"WorldRendererMixin",
+		"RenderLayerDrawMixin",
 		"ChunkBuilderMixin",
 		"ChunkBuilderTaskMixin",
 		"DebugHudMixin",
 		"EntityRendererMixin",
 		"HeldItemRendererMixin",
-		"accessor.NativeImageAccessor"
+		"accessor.NativeImageAccessor",
+		"accessor.VertexBufferAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

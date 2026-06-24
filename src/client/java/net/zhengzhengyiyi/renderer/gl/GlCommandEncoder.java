@@ -57,10 +57,28 @@ public class GlCommandEncoder implements CommandEncoder {
    @Nullable
    private GlTimerQuery timerQuery;
 
+   // Per-sampler-slot tracking to avoid redundant texture/sampler binds.
+   // Indexed by GL texture unit (samplerIndex). Each slot stores the last
+   // texture glId and sampler object id that was bound there so we can skip
+   // the bind calls when nothing changed between draw calls in the same pass.
+   private static final int MAX_SAMPLER_SLOTS = 32;
+   private final int[] lastBoundTexture  = new int[MAX_SAMPLER_SLOTS];
+   private final int[] lastBoundSampler  = new int[MAX_SAMPLER_SLOTS];
+   private final int[] lastBoundTexTarget = new int[MAX_SAMPLER_SLOTS];
+   private final int[] lastMipBase       = new int[MAX_SAMPLER_SLOTS];
+   private final int[] lastMipMax        = new int[MAX_SAMPLER_SLOTS];
+
    protected GlCommandEncoder(GlBackend backend) {
       this.backend = backend;
       this.temporaryFb1 = backend.getBufferManager().createFramebuffer();
       this.temporaryFb2 = backend.getBufferManager().createFramebuffer();
+      // Initialise sampler-slot caches to an impossible sentinel so the first
+      // bind on every slot always goes through unconditionally.
+      java.util.Arrays.fill(this.lastBoundTexture,   -1);
+      java.util.Arrays.fill(this.lastBoundSampler,   -1);
+      java.util.Arrays.fill(this.lastBoundTexTarget, -1);
+      java.util.Arrays.fill(this.lastMipBase,        -1);
+      java.util.Arrays.fill(this.lastMipMax,         -1);
    }
 
    @Override
@@ -941,20 +959,57 @@ public class GlCommandEncoder implements CommandEncoder {
                GlStateManager._glUniform1i(samplerUniform.location(), samplerUniform.samplerIndex());
             }
 
-            GlStateManager._activeTexture(33984 + samplerUniform.samplerIndex());
+            int slot = samplerUniform.samplerIndex();
             GlTexture glTexture = glTextureView2.texture();
-            int o;
+            int texTarget;
             if ((glTexture.usage() & 16) != 0) {
-               o = 34067;
-               GL11.glBindTexture(34067, glTexture.glId);
+               texTarget = 34067; // GL_TEXTURE_CUBE_MAP
             } else {
-               o = 3553;
-               GlStateManager._bindTexture(glTexture.glId);
+               texTarget = 3553;  // GL_TEXTURE_2D
             }
+            int texId     = glTexture.glId;
+            int samplerId = samplerUniform2x.sampler().getSamplerId();
+            int mipBase   = glTextureView2.baseMipLevel();
+            int mipMax    = mipBase + glTextureView2.mipLevels() - 1;
 
-            GL33C.glBindSampler(samplerUniform.samplerIndex(), samplerUniform2x.sampler().getSamplerId());
-            GlStateManager._texParameter(o, 33084, glTextureView2.baseMipLevel());
-            GlStateManager._texParameter(o, 33085, glTextureView2.baseMipLevel() + glTextureView2.mipLevels() - 1);
+            // Only issue GL calls when something actually changed for this slot.
+            boolean texChanged     = slot < MAX_SAMPLER_SLOTS
+                                     && (lastBoundTexture[slot] != texId || lastBoundTexTarget[slot] != texTarget);
+            boolean samplerChanged = slot < MAX_SAMPLER_SLOTS && lastBoundSampler[slot] != samplerId;
+            boolean mipChanged     = slot < MAX_SAMPLER_SLOTS
+                                     && (lastMipBase[slot] != mipBase || lastMipMax[slot] != mipMax);
+
+            if (bl2 || texChanged || samplerChanged || mipChanged) {
+               GlStateManager._activeTexture(33984 + slot);
+
+               if (bl2 || texChanged) {
+                  if (texTarget == 34067) {
+                     GL11.glBindTexture(34067, texId);
+                  } else {
+                     GlStateManager._bindTexture(texId);
+                  }
+                  if (slot < MAX_SAMPLER_SLOTS) {
+                     lastBoundTexture[slot]   = texId;
+                     lastBoundTexTarget[slot] = texTarget;
+                  }
+               }
+
+               if (bl2 || samplerChanged) {
+                  GL33C.glBindSampler(slot, samplerId);
+                  if (slot < MAX_SAMPLER_SLOTS) {
+                     lastBoundSampler[slot] = samplerId;
+                  }
+               }
+
+               if (bl2 || mipChanged) {
+                  GlStateManager._texParameter(texTarget, 33084, mipBase);
+                  GlStateManager._texParameter(texTarget, 33085, mipMax);
+                  if (slot < MAX_SAMPLER_SLOTS) {
+                     lastMipBase[slot] = mipBase;
+                     lastMipMax[slot]  = mipMax;
+                  }
+               }
+            }
          } else {
             throw new IllegalStateException(null, null);
          }
@@ -1025,6 +1080,13 @@ public class GlCommandEncoder implements CommandEncoder {
       this.renderPassOpen = false;
       GlStateManager._glBindFramebuffer(36160, 0);
       this.backend.getDebugLabelManager().popDebugGroup();
+      // Invalidate sampler-slot cache: external GL code (vanilla, mixins) may
+      // rebind texture units between passes, so we can't carry state across.
+      java.util.Arrays.fill(this.lastBoundTexture,   -1);
+      java.util.Arrays.fill(this.lastBoundSampler,   -1);
+      java.util.Arrays.fill(this.lastBoundTexTarget, -1);
+      java.util.Arrays.fill(this.lastMipBase,        -1);
+      java.util.Arrays.fill(this.lastMipMax,         -1);
    }
 
    protected GlBackend getBackend() {
