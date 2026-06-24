@@ -347,7 +347,6 @@ public class RenderPipeline {
          return this;
       }
 
-      @Deprecated
       public RenderPipeline.Builder withColorLogic(LogicOp colorLogic) {
          this.colorLogic = Optional.of(colorLogic);
          return this;

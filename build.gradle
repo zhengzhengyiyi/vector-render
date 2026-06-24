@@ -85,3 +85,8 @@ publishing {
 		// retrieving dependencies.
 	}
 }
+
+javadoc {
+	source += sourceSets.client.allJava
+    classpath += sourceSets.client.compileClasspath
+}
