@@ -2,16 +2,16 @@
 	"schemaVersion": 1,
 	"id": "renderer",
 	"version": "${version}",
-	"name": "renderer",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "vector-render",
+	"description": "A mod use part of 1.21.11 logic and bring them back into 1.20.x",
 	"authors": [
-		"Me!"
+		"zhengzhengyiyi"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
-	"license": "CC0-1.0",
+	"license": "Apache License 2.0",
 	"accessWidener": "renderer.accesswidener",
 	"icon": "assets/renderer/icon.png",
 	"environment": "*",

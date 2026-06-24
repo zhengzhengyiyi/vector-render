@@ -56,6 +56,4 @@ decompile/
   1.21.11-vineflower/  — reference decompile of 1.21.11 client
 ```
 
-## Notes
-
-The decompiled sources in `decompile/` are for reference only and are not compiled. They exist to make it easier to diff behaviour between versions when porting additional fixes.
+<!-- WordStatusExisting Mods Found?VerdictVelocity🟢 CLEARNone. (Only the standalone "Velocity" proxy server tool for BungeeCord exists, but no Minecraft game performance mods use this name).Perfect choice for your main rendering engine.Vector🟢 CLEARNone. Completely untouched in the performance/optimization category.Perfect for your CPU/Tick logic optimizer.Static🟢 CLEARNone. Completely untouched.Perfect for your RAM/Memory reducer.Inertia🟡 AVOIDThere is an old, well-known hacked/utility client called "Inertia Client". Using this would confuse players.Avoid using for this suite.Friction🟡 AVOIDThere is a recent PvP aiming adjustment mod called "FrictionAim".Avoid using for this suite.Momentum🟢 CLEARNone. Only mentioned as a general gameplay mechanic descriptor.Excellent backup option. -->
