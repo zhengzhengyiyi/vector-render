@@ -2,6 +2,7 @@
 	"required": true,
 	"package": "net.zhengzhengyiyi.client.mixin",
 	"compatibilityLevel": "JAVA_17",
+	"plugin": "net.zhengzhengyiyi.client.RendererMixinPlugin",
 	"client": [
 		"MinecraftClientMixin",
 		"RenderSystemMixin",

@@ -2,6 +2,7 @@ package net.zhengzhengyiyi.client.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.zhengzhengyiyi.client.render.RenderEngine;
+
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -10,6 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(RenderSystem.class)
 public class RenderSystemMixin {
+	// @Shadow
+	// static double lastDrawTime = Double.MIN_VALUE;
 
 	/**
 	 * Issue {@code glFlush()} before {@code glfwSwapBuffers()} so the driver
@@ -57,4 +60,16 @@ public class RenderSystemMixin {
 		RenderEngine.getDynamicUniforms().clear();
 		RenderEngine.executePendingTasks();
 	}
+
+	// @Inject(method = "limitDisplayFPS(I)V", at = @At("HEAD"))
+	// static void renderer$onLimitDisplayFPS(int fps, CallbackInfo ci) {
+    //     double d = lastDrawTime + 1.0 / fps;
+
+    //     double e;
+    //     for (e = GLFW.glfwGetTime(); e < d; e = GLFW.glfwGetTime()) {
+    //         GLFW.glfwWaitEventsTimeout(d - e);
+    //     }
+
+    //     lastDrawTime = e;
+	// }
 }
