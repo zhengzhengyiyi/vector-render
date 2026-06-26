@@ -14,6 +14,8 @@
 		"DebugHudMixin",
 		"EntityRendererMixin",
 		"HeldItemRendererMixin",
+		"ClientChunkManagerMixin",
+		"WorldChunkMixin",
 		"accessor.NativeImageAccessor",
 		"accessor.VertexBufferAccessor"
 	],
