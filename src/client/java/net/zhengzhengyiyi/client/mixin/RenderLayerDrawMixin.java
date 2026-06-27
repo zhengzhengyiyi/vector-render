@@ -3,6 +3,7 @@ package net.zhengzhengyiyi.client.mixin;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.gl.GlUniform;
 import net.minecraft.client.gl.VertexBuffer;
+import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -34,9 +35,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  *   <li><b>VAO deduplication</b> — redirects every {@code VertexBuffer.bind()}
  *       in the chunk loop and skips {@code glBindVertexArray} when the VAO id
  *       hasn't changed. On solid terrain where all chunks share the same vertex
- *       format this reduces N VAO switches per layer to 1. Also skips the
- *       {@code BufferRenderer.resetCurrentVertexBuffer()} call that vanilla
- *       issues before every bind, which serves no purpose in this path.</li>
+ *       format this reduces N VAO switches per layer to 1.</li>
  *
  *   <li><b>chunkOffset deduplication</b> — the {@code chunkOffset} uniform is
  *       only uploaded when the value actually changes.  In practice every chunk
@@ -98,9 +97,9 @@ public abstract class RenderLayerDrawMixin {
      *
      * <p>Vanilla's {@code bind()} does two things:
      * <ol>
-     *   <li>{@code BufferRenderer.resetCurrentVertexBuffer()} — nulls a static
-     *       field used only by the immediate-mode {@code BufferRenderer} path,
-     *       which is never taken during chunk rendering. Skipped entirely.</li>
+     *   <li>{@code BufferRenderer.resetCurrentVertexBuffer()} — nulls
+     *       BufferRenderer's cached immediate-mode VAO so later non-chunk draws
+     *       cannot assume their VAO is still bound after chunk rendering.</li>
      *   <li>{@code glBindVertexArray(vertexArrayId)} — skipped when the VAO id
      *       matches the one already bound.</li>
      * </ol>
@@ -113,13 +112,12 @@ public abstract class RenderLayerDrawMixin {
         )
     )
     private void renderer$deduplicateVaoBind(VertexBuffer vertexBuffer) {
+        BufferRenderer.resetCurrentVertexBuffer();
         int vaoId = ((VertexBufferAccessor) vertexBuffer).renderer$getVertexArrayId();
         if (vaoId != this.renderer$currentVao) {
             GlStateManager._glBindVertexArray(vaoId);
             this.renderer$currentVao = vaoId;
         }
-        // BufferRenderer.resetCurrentVertexBuffer() intentionally skipped —
-        // chunk rendering never uses BufferRenderer's tracked buffer state.
     }
 
     // -------------------------------------------------------------------------
@@ -167,8 +165,7 @@ public abstract class RenderLayerDrawMixin {
      * Replaces {@link VertexBuffer#unbind()} at the end of the layer.
      *
      * <p>Vanilla issues {@code BufferRenderer.resetCurrentVertexBuffer()} +
-     * {@code glBindVertexArray(0)}.  We keep the {@code glBindVertexArray(0)}
-     * (needed so entity/GUI passes start clean) and reset our tracker.
+     * {@code glBindVertexArray(0)}. Keep both effects and reset our tracker.
      */
     @Redirect(
         method = "renderLayer(Lnet/minecraft/client/render/RenderLayer;Lnet/minecraft/client/util/math/MatrixStack;DDDLorg/joml/Matrix4f;)V",
@@ -178,6 +175,7 @@ public abstract class RenderLayerDrawMixin {
         )
     )
     private void renderer$trackedUnbind() {
+        BufferRenderer.resetCurrentVertexBuffer();
         GlStateManager._glBindVertexArray(0);
         this.renderer$currentVao = -1;
     }
