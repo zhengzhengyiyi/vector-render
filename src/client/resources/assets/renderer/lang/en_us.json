@@ -18,5 +18,8 @@
   "debug.entry.renderer.server_info": "Server Info",
   "debug.entry.renderer.memory": "Memory",
   "debug.entry.renderer.chunk_stats": "Chunk Stats",
-  "debug.entry.renderer.position": "Position"
+  "debug.entry.renderer.position": "Position",
+  "debug.entry.renderer.entities": "Entities",
+  "debug.entry.renderer.world_string": "World String",
+  "debug.entry.renderer.chunk_info": "Chunk Info"
 }

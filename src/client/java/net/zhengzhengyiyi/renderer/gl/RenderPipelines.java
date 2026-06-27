@@ -40,30 +40,30 @@ public class RenderPipelines {
    private static final RenderPipeline.Snippet TERRAIN_SNIPPET = RenderPipeline.builder(FOG_AND_SAMPLERS_SNIPPET)
       .withUniform("Projection", UniformType.UNIFORM_BUFFER)
       .withUniform("ChunkSection", UniformType.UNIFORM_BUFFER)
-      .withVertexShader("core/terrain")
-      .withFragmentShader("core/terrain")
+      .withVertexShader(new Identifier("renderer", "shaders/core/terrain"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/terrain"))
       .buildSnippet();
    private static final RenderPipeline.Snippet BLOCK_SNIPPET = RenderPipeline.builder(FOG_AND_SAMPLERS_SNIPPET, TRANSFORMS_AND_PROJECTION_SNIPPET)
-      .withVertexShader("core/block")
-      .withFragmentShader("core/block")
+      .withVertexShader(new Identifier("renderer", "shaders/core/block"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/block"))
       .buildSnippet();
    private static final RenderPipeline.Snippet ENTITY_SNIPPET = RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_LIGHTING_SNIPPET)
-      .withVertexShader("core/entity")
-      .withFragmentShader("core/entity")
+      .withVertexShader(new Identifier("renderer", "shaders/core/entity"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/entity"))
       .withSampler("Sampler0")
       .withSampler("Sampler2")
       .withVertexFormat(VertexFormats211.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS)
       .buildSnippet();
    private static final RenderPipeline.Snippet ENTITY_EMISSIVE_SNIPPET = RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_LIGHTING_SNIPPET)
-      .withVertexShader("core/entity")
-      .withFragmentShader("core/entity")
+      .withVertexShader(new Identifier("renderer", "shaders/core/entity"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/entity"))
       .withSampler("Sampler0")
       .withVertexFormat(VertexFormats211.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS)
       .withShaderDefine("EMISSIVE")
       .buildSnippet();
    private static final RenderPipeline.Snippet RENDERTYPE_BEACON_BEAM_SNIPPET = RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_SNIPPET)
-      .withVertexShader("core/rendertype_beacon_beam")
-      .withFragmentShader("core/rendertype_beacon_beam")
+      .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_beacon_beam"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_beacon_beam"))
       .withSampler("Sampler0")
       .withVertexFormat(VertexFormats211.POSITION_COLOR_TEXTURE_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS)
       .buildSnippet();
@@ -74,37 +74,37 @@ public class RenderPipelines {
    private static final RenderPipeline.Snippet RENDERTYPE_END_PORTAL_SNIPPET = RenderPipeline.builder(
          TRANSFORMS_AND_PROJECTION_SNIPPET, FOG_SNIPPET, GLOBALS_SNIPPET
       )
-      .withVertexShader("core/rendertype_end_portal")
-      .withFragmentShader("core/rendertype_end_portal")
+      .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_end_portal"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_end_portal"))
       .withSampler("Sampler0")
       .withSampler("Sampler1")
       .withVertexFormat(VertexFormats211.POSITION, VertexFormat.DrawMode.QUADS)
       .buildSnippet();
    private static final RenderPipeline.Snippet RENDERTYPE_CLOUDS_SNIPPET = RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_SNIPPET)
-      .withVertexShader("core/rendertype_clouds")
-      .withFragmentShader("core/rendertype_clouds")
+      .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_clouds"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_clouds"))
       .withBlend(BlendFunction.TRANSLUCENT)
       .withVertexFormat(VertexFormats211.EMPTY, VertexFormat.DrawMode.QUADS)
       .withUniform("CloudInfo", UniformType.UNIFORM_BUFFER)
       .withUniform("CloudFaces", UniformType.TEXEL_BUFFER, TextureFormat.RED8I)
       .buildSnippet();
    private static final RenderPipeline.Snippet RENDERTYPE_LINES_SNIPPET = RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_SNIPPET, GLOBALS_SNIPPET)
-      .withVertexShader("core/rendertype_lines")
-      .withFragmentShader("core/rendertype_lines")
+      .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_lines"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_lines"))
       .withBlend(BlendFunction.TRANSLUCENT)
       .withCull(false)
       .withVertexFormat(VertexFormats211.POSITION_COLOR_NORMAL_LINE_WIDTH, VertexFormat.DrawMode.LINES)
       .buildSnippet();
    private static final RenderPipeline.Snippet POSITION_COLOR_SNIPPET = RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
-      .withVertexShader("core/position_color")
-      .withFragmentShader("core/position_color")
+      .withVertexShader(new Identifier("renderer", "shaders/core/position_color"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/position_color"))
       .withBlend(BlendFunction.TRANSLUCENT)
       .withDepthWrite(false)
       .withVertexFormat(VertexFormats211.POSITION_COLOR, VertexFormat.DrawMode.QUADS)
       .buildSnippet();
    private static final RenderPipeline.Snippet PARTICLE_SNIPPET = RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_SNIPPET)
-      .withVertexShader("core/particle")
-      .withFragmentShader("core/particle")
+      .withVertexShader(new Identifier("renderer", "shaders/core/particle"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/particle"))
       .withSampler("Sampler0")
       .withSampler("Sampler2")
       .withVertexFormat(VertexFormats211.POSITION_TEXTURE_COLOR_LIGHT, VertexFormat.DrawMode.QUADS)
@@ -114,15 +114,15 @@ public class RenderPipelines {
       .withCull(false)
       .buildSnippet();
    private static final RenderPipeline.Snippet GUI_SNIPPET = RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
-      .withVertexShader("core/gui")
-      .withFragmentShader("core/gui")
+      .withVertexShader(new Identifier("renderer", "shaders/core/gui"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/gui"))
       .withBlend(BlendFunction.TRANSLUCENT)
       .withVertexFormat(VertexFormats211.POSITION_COLOR, VertexFormat.DrawMode.QUADS)
       .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
       .buildSnippet();
    private static final RenderPipeline.Snippet POSITION_TEX_COLOR_SNIPPET = RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
-      .withVertexShader("core/position_tex_color")
-      .withFragmentShader("core/position_tex_color")
+      .withVertexShader(new Identifier("renderer", "shaders/core/position_color"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/position_color"))
       .withSampler("Sampler0")
       .withBlend(BlendFunction.TRANSLUCENT)
       .withVertexFormat(VertexFormats211.POSITION_TEXTURE_COLOR, VertexFormat.DrawMode.QUADS)
@@ -132,8 +132,8 @@ public class RenderPipelines {
       .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
       .buildSnippet();
    private static final RenderPipeline.Snippet RENDERTYPE_OUTLINE_SNIPPET = RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
-      .withVertexShader("core/rendertype_outline")
-      .withFragmentShader("core/rendertype_outline")
+      .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_outline"))
+      .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_outline"))
       .withSampler("Sampler0")
       .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
       .withDepthWrite(false)
@@ -144,22 +144,24 @@ public class RenderPipelines {
       .withDepthWrite(false)
       .withVertexFormat(VertexFormats211.EMPTY, VertexFormat.DrawMode.TRIANGLES)
       .buildSnippet();
-   public static final RenderPipeline SOLID_BLOCK = register(RenderPipeline.builder(BLOCK_SNIPPET).withLocation("pipeline/solid_block").build());
-   public static final RenderPipeline SOLID_TERRAIN = register(RenderPipeline.builder(TERRAIN_SNIPPET).withLocation("pipeline/solid_terrain").build());
+   public static final RenderPipeline SOLID_BLOCK = register(RenderPipeline.builder(BLOCK_SNIPPET).withLocation("pipeline/solid_block").withCull(true).build());
+   public static final RenderPipeline SOLID_TERRAIN = register(RenderPipeline.builder(TERRAIN_SNIPPET).withLocation("pipeline/solid_terrain").withCull(true).build());
    public static final RenderPipeline WIREFRAME = register(
       RenderPipeline.builder(TERRAIN_SNIPPET).withLocation("pipeline/wireframe").withPolygonMode(PolygonMode.WIREFRAME).build()
    );
    public static final RenderPipeline CUTOUT_BLOCK = register(
-      RenderPipeline.builder(BLOCK_SNIPPET).withLocation("pipeline/cutout_block").withShaderDefine("ALPHA_CUTOUT", 0.5F).build()
+      RenderPipeline.builder(BLOCK_SNIPPET).withLocation("pipeline/cutout_block").withShaderDefine("ALPHA_CUTOUT", 0.5F).withCull(true).build()
    );
    public static final RenderPipeline CUTOUT_TERRAIN = register(
-      RenderPipeline.builder(TERRAIN_SNIPPET).withLocation("pipeline/cutout_terrain").withShaderDefine("ALPHA_CUTOUT", 0.5F).build()
+      RenderPipeline.builder(TERRAIN_SNIPPET).withLocation("pipeline/cutout_terrain").withShaderDefine("ALPHA_CUTOUT", 0.5F).withCull(true).build()
    );
    public static final RenderPipeline TRANSLUCENT = register(
       RenderPipeline.builder(TERRAIN_SNIPPET)
          .withLocation("pipeline/translucent_terrain")
          .withBlend(BlendFunction.TRANSLUCENT)
          .withShaderDefine("ALPHA_CUTOUT", 0.01F)
+         .withCull(false)
+         .withDepthWrite(false)
          .build()
    );
    public static final RenderPipeline TRIPWIRE_BLOCK = register(
@@ -167,6 +169,8 @@ public class RenderPipelines {
          .withLocation("pipeline/tripwire_block")
          .withShaderDefine("ALPHA_CUTOUT", 0.1F)
          .withBlend(BlendFunction.TRANSLUCENT)
+         .withCull(false)
+         .withDepthWrite(false)
          .build()
    );
    public static final RenderPipeline TRIPWIRE_TERRAIN = register(
@@ -174,16 +178,18 @@ public class RenderPipelines {
          .withLocation("pipeline/tripwire_terrain")
          .withShaderDefine("ALPHA_CUTOUT", 0.1F)
          .withBlend(BlendFunction.TRANSLUCENT)
+         .withDepthWrite(false)
          .build()
    );
    public static final RenderPipeline RENDERTYPE_TRANSLUCENT_MOVING_BLOCK = register(
       RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
          .withLocation("pipeline/translucent_moving_block")
-         .withVertexShader("core/rendertype_translucent_moving_block")
-         .withFragmentShader("core/rendertype_translucent_moving_block")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_translucent_moving_block"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_translucent_moving_block"))
          .withSampler("Sampler0")
          .withSampler("Sampler2")
          .withBlend(BlendFunction.TRANSLUCENT)
+         .withDepthWrite(false)
          .withVertexFormat(VertexFormats211.POSITION_COLOR_TEXTURE_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS)
          .build()
    );
@@ -326,8 +332,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_ENTITY_DECAL = register(
       RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_LIGHTING_SNIPPET)
          .withLocation("pipeline/entity_decal")
-         .withVertexShader("core/rendertype_entity_decal")
-         .withFragmentShader("core/rendertype_entity_decal")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_entity_decal"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_entity_decal"))
          .withSampler("Sampler0")
          .withSampler("Sampler1")
          .withSampler("Sampler2")
@@ -339,8 +345,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_ENTITY_SHADOW = register(
       RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_SNIPPET)
          .withLocation("pipeline/entity_shadow")
-         .withVertexShader("core/rendertype_entity_shadow")
-         .withFragmentShader("core/rendertype_entity_shadow")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_entity_shadow"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_entity_shadow"))
          .withSampler("Sampler0")
          .withBlend(BlendFunction.TRANSLUCENT)
          .withDepthWrite(false)
@@ -350,8 +356,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_ITEM_ENTITY_TRANSLUCENT_CULL = register(
       RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_LIGHTING_SNIPPET)
          .withLocation("pipeline/item_entity_translucent_cull")
-         .withVertexShader("core/rendertype_item_entity_translucent_cull")
-         .withFragmentShader("core/rendertype_item_entity_translucent_cull")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_item_entity_translucent_cull"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_item_entity_translucent_cull"))
          .withSampler("Sampler0")
          .withSampler("Sampler2")
          .withBlend(BlendFunction.TRANSLUCENT)
@@ -371,8 +377,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_ENTITY_ALPHA = register(
       RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
          .withLocation("pipeline/dragon_explosion_alpha")
-         .withVertexShader("core/rendertype_entity_alpha")
-         .withFragmentShader("core/rendertype_entity_alpha")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_entity_alpha"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_entity_alpha"))
          .withSampler("Sampler0")
          .withCull(false)
          .withVertexFormat(VertexFormats211.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS)
@@ -381,8 +387,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_LEASH = register(
       RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_SNIPPET)
          .withLocation("pipeline/leash")
-         .withVertexShader("core/rendertype_leash")
-         .withFragmentShader("core/rendertype_leash")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_leash"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_leash"))
          .withSampler("Sampler2")
          .withCull(false)
          .withVertexFormat(VertexFormats211.POSITION_COLOR_LIGHT, VertexFormat.DrawMode.TRIANGLE_STRIP)
@@ -391,8 +397,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_WATER_MASK = register(
       RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
          .withLocation("pipeline/water_mask")
-         .withVertexShader("core/rendertype_water_mask")
-         .withFragmentShader("core/rendertype_water_mask")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_water_mask"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_water_mask"))
          .withColorWrite(false)
          .withVertexFormat(VertexFormats211.POSITION, VertexFormat.DrawMode.QUADS)
          .build()
@@ -400,8 +406,8 @@ public class RenderPipelines {
    public static final RenderPipeline GLINT = register(
       RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET, FOG_SNIPPET, GLOBALS_SNIPPET)
          .withLocation("pipeline/glint")
-         .withVertexShader("core/glint")
-         .withFragmentShader("core/glint")
+         .withVertexShader(new Identifier("renderer", "shaders/core/glint"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/glint"))
          .withSampler("Sampler0")
          .withDepthWrite(false)
          .withCull(false)
@@ -413,8 +419,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_CRUMBLING = register(
       RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
          .withLocation("pipeline/crumbling")
-         .withVertexShader("core/rendertype_crumbling")
-         .withFragmentShader("core/rendertype_crumbling")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_crumbling"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_crumbling"))
          .withSampler("Sampler0")
          .withBlend(new BlendFunction(SourceFactor.DST_COLOR, DestFactor.SRC_COLOR, SourceFactor.ONE, DestFactor.ZERO))
          .withDepthWrite(false)
@@ -425,8 +431,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_TEXT = register(
       RenderPipeline.builder(TEXT_SNIPPET, FOG_SNIPPET)
          .withLocation("pipeline/text")
-         .withVertexShader("core/rendertype_text")
-         .withFragmentShader("core/rendertype_text")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_text"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_text"))
          .withSampler("Sampler0")
          .withSampler("Sampler2")
          .build()
@@ -434,8 +440,8 @@ public class RenderPipelines {
    public static final RenderPipeline GUI_TEXT = register(
       RenderPipeline.builder(GUI_TEXT_SNIPPET, FOG_SNIPPET)
          .withLocation("pipeline/gui_text")
-         .withVertexShader("core/rendertype_text")
-         .withFragmentShader("core/rendertype_text")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_text"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_text"))
          .withSampler("Sampler0")
          .withSampler("Sampler2")
          .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
@@ -444,8 +450,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_TEXT_BG = register(
       RenderPipeline.builder(TEXT_SNIPPET, FOG_SNIPPET)
          .withLocation("pipeline/text_background")
-         .withVertexShader("core/rendertype_text_background")
-         .withFragmentShader("core/rendertype_text_background")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_text_background"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_text_background"))
          .withSampler("Sampler2")
          .withVertexFormat(VertexFormats211.POSITION_COLOR_LIGHT, VertexFormat.DrawMode.QUADS)
          .build()
@@ -453,8 +459,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_TEXT_INTENSITY = register(
       RenderPipeline.builder(TEXT_SNIPPET, FOG_SNIPPET)
          .withLocation("pipeline/text_intensity")
-         .withVertexShader("core/rendertype_text_intensity")
-         .withFragmentShader("core/rendertype_text_intensity")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_text_intensity"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_text_intensity"))
          .withSampler("Sampler0")
          .withSampler("Sampler2")
          .withDepthBias(-1.0F, -10.0F)
@@ -463,8 +469,8 @@ public class RenderPipelines {
    public static final RenderPipeline GUI_TEXT_INTENSITY = register(
       RenderPipeline.builder(GUI_TEXT_SNIPPET, FOG_SNIPPET)
          .withLocation("pipeline/gui_text_intensity")
-         .withVertexShader("core/rendertype_text_intensity")
-         .withFragmentShader("core/rendertype_text_intensity")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_text_intensity"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_text_intensity"))
          .withSampler("Sampler0")
          .withSampler("Sampler2")
          .build()
@@ -472,8 +478,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_TEXT_POLYGON_OFFSET = register(
       RenderPipeline.builder(TEXT_SNIPPET, FOG_SNIPPET)
          .withLocation("pipeline/text_polygon_offset")
-         .withVertexShader("core/rendertype_text")
-         .withFragmentShader("core/rendertype_text")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_text"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_text"))
          .withSampler("Sampler0")
          .withSampler("Sampler2")
          .withDepthBias(-1.0F, -10.0F)
@@ -482,8 +488,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_TEXT_SEETHROUGH = register(
       RenderPipeline.builder(TEXT_SNIPPET)
          .withLocation("pipeline/text_see_through")
-         .withVertexShader("core/rendertype_text_see_through")
-         .withFragmentShader("core/rendertype_text_see_through")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_text_see_through"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_text_see_through"))
          .withSampler("Sampler0")
          .withDepthWrite(false)
          .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
@@ -492,8 +498,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_TEXT_BG_SEETHROUGH = register(
       RenderPipeline.builder(TEXT_SNIPPET)
          .withLocation("pipeline/text_background_see_through")
-         .withVertexShader("core/rendertype_text_background_see_through")
-         .withFragmentShader("core/rendertype_text_background_see_through")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_text_background_see_through"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_text_background_see_through"))
          .withDepthWrite(false)
          .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
          .withVertexFormat(VertexFormats211.POSITION_COLOR_LIGHT, VertexFormat.DrawMode.QUADS)
@@ -502,8 +508,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_TEXT_INTENSITY_SEETHROUGH = register(
       RenderPipeline.builder(TEXT_SNIPPET)
          .withLocation("pipeline/text_intensity_see_through")
-         .withVertexShader("core/rendertype_text_intensity_see_through")
-         .withFragmentShader("core/rendertype_text_intensity_see_through")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_text_intensity_see_through"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_text_intensity_see_through"))
          .withSampler("Sampler0")
          .withDepthWrite(false)
          .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
@@ -512,8 +518,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_LIGHTNING = register(
       RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_SNIPPET)
          .withLocation("pipeline/lightning")
-         .withVertexShader("core/rendertype_lightning")
-         .withFragmentShader("core/rendertype_lightning")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_lightning"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_lightning"))
          .withBlend(BlendFunction.LIGHTNING)
          .withVertexFormat(VertexFormats211.POSITION_COLOR, VertexFormat.DrawMode.QUADS)
          .build()
@@ -521,8 +527,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_LIGHTNING_DRAGON_RAYS = register(
       RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_SNIPPET)
          .withLocation("pipeline/dragon_rays")
-         .withVertexShader("core/rendertype_lightning")
-         .withFragmentShader("core/rendertype_lightning")
+         .withVertexShader(new Identifier("renderer", "shaders/core/rendertype_lightning"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/rendertype_lightning"))
          .withDepthWrite(false)
          .withBlend(BlendFunction.LIGHTNING)
          .withVertexFormat(VertexFormats211.POSITION_COLOR, VertexFormat.DrawMode.TRIANGLES)
@@ -531,8 +537,8 @@ public class RenderPipelines {
    public static final RenderPipeline POSITION_DRAGON_RAYS_DEPTH = register(
       RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_SNIPPET)
          .withLocation("pipeline/dragon_rays_depth")
-         .withVertexShader("core/position")
-         .withFragmentShader("core/position")
+         .withVertexShader(new Identifier("renderer", "shaders/core/position"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/position"))
          .withColorWrite(false)
          .withVertexFormat(VertexFormats211.POSITION, VertexFormat.DrawMode.TRIANGLES)
          .build()
@@ -561,8 +567,8 @@ public class RenderPipelines {
    public static final RenderPipeline DEBUG_POINTS = register(
       RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
          .withLocation("pipeline/debug_points")
-         .withVertexShader("core/debug_point")
-         .withFragmentShader("core/position_color")
+         .withVertexShader(new Identifier("renderer", "shaders/core/debug_point"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/position_color"))
          .withCull(false)
          .withVertexFormat(VertexFormats211.POSITION_COLOR_LINE_WIDTH, VertexFormat.DrawMode.POINTS)
          .build()
@@ -583,8 +589,8 @@ public class RenderPipelines {
    public static final RenderPipeline RENDERTYPE_WORLD_BORDER = register(
       RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
          .withLocation("pipeline/world_border")
-         .withVertexShader("core/rendertype_world_border")
-         .withFragmentShader("core/rendertype_world_border")
+         .withVertexShader(new Identifier("renderer", "shaders/core/position_color"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/position_color"))
          .withSampler("Sampler0")
          .withBlend(BlendFunction.OVERLAY)
          .withCull(false)
@@ -603,8 +609,8 @@ public class RenderPipelines {
    public static final RenderPipeline POSITION_SKY = register(
       RenderPipeline.builder(TRANSFORMS_PROJECTION_FOG_SNIPPET)
          .withLocation("pipeline/sky")
-         .withVertexShader("core/sky")
-         .withFragmentShader("core/sky")
+         .withVertexShader(new Identifier("renderer", "shaders/core/sky"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/sky"))
          .withDepthWrite(false)
          .withVertexFormat(VertexFormats211.POSITION, VertexFormat.DrawMode.TRIANGLE_FAN)
          .build()
@@ -612,8 +618,8 @@ public class RenderPipelines {
    public static final RenderPipeline POSITION_TEX_COLOR_END_SKY = register(
       RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
          .withLocation("pipeline/end_sky")
-         .withVertexShader("core/position_tex_color")
-         .withFragmentShader("core/position_tex_color")
+         .withVertexShader(new Identifier("renderer", "shaders/core/position_color"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/position_color"))
          .withSampler("Sampler0")
          .withBlend(BlendFunction.TRANSLUCENT)
          .withDepthWrite(false)
@@ -623,8 +629,8 @@ public class RenderPipelines {
    public static final RenderPipeline POSITION_COLOR_SUNRISE_SUNSET = register(
       RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
          .withLocation("pipeline/sunrise_sunset")
-         .withVertexShader("core/position_color")
-         .withFragmentShader("core/position_color")
+         .withVertexShader(new Identifier("renderer", "shaders/core/position_color"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/position_color"))
          .withBlend(BlendFunction.TRANSLUCENT)
          .withDepthWrite(false)
          .withVertexFormat(VertexFormats211.POSITION_COLOR, VertexFormat.DrawMode.TRIANGLE_FAN)
@@ -633,8 +639,8 @@ public class RenderPipelines {
    public static final RenderPipeline POSITION_STARS = register(
       RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
          .withLocation("pipeline/stars")
-         .withVertexShader("core/stars")
-         .withFragmentShader("core/stars")
+         .withVertexShader(new Identifier("renderer", "shaders/core/position_color"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/position_color"))
          .withBlend(BlendFunction.OVERLAY)
          .withDepthWrite(false)
          .withVertexFormat(VertexFormats211.POSITION, VertexFormat.DrawMode.QUADS)
@@ -643,8 +649,8 @@ public class RenderPipelines {
    public static final RenderPipeline POSITION_TEX_COLOR_CELESTIAL = register(
       RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
          .withLocation("pipeline/celestial")
-         .withVertexShader("core/position_tex")
-         .withFragmentShader("core/position_tex")
+         .withVertexShader(new Identifier("renderer", "shaders/core/position"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/position"))
          .withSampler("Sampler0")
          .withBlend(BlendFunction.OVERLAY)
          .withDepthWrite(false)
@@ -703,8 +709,8 @@ public class RenderPipelines {
    public static final RenderPipeline ENTITY_OUTLINE_BLIT = register(
       RenderPipeline.builder()
          .withLocation("pipeline/entity_outline_blit")
-         .withVertexShader("core/screenquad")
-         .withFragmentShader("core/blit_screen")
+         .withVertexShader(new Identifier("renderer", "shaders/core/screenquad"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/blit_screen"))
          .withSampler("InSampler")
          .withBlend(BlendFunction.ENTITY_OUTLINE_BLIT)
          .withDepthWrite(false)
@@ -716,8 +722,8 @@ public class RenderPipelines {
    public static final RenderPipeline TRACY_BLIT = register(
       RenderPipeline.builder()
          .withLocation("pipeline/tracy_blit")
-         .withVertexShader("core/screenquad")
-         .withFragmentShader("core/blit_screen")
+         .withVertexShader(new Identifier("renderer", "shaders/core/screenquad"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/blit_screen"))
          .withSampler("InSampler")
          .withDepthWrite(false)
          .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
@@ -727,8 +733,8 @@ public class RenderPipelines {
    public static final RenderPipeline POSITION_TEX_PANORAMA = register(
       RenderPipeline.builder(TRANSFORMS_AND_PROJECTION_SNIPPET)
          .withLocation("pipeline/panorama")
-         .withVertexShader("core/panorama")
-         .withFragmentShader("core/panorama")
+         .withVertexShader(new Identifier("renderer", "shaders/core/panorama"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/panorama"))
          .withSampler("Sampler0")
          .withDepthWrite(false)
          .withColorWrite(true, false)
@@ -742,8 +748,8 @@ public class RenderPipelines {
    public static final RenderPipeline BILT_SCREEN_LIGHTMAP = register(
       RenderPipeline.builder()
          .withLocation("pipeline/lightmap")
-         .withVertexShader("core/screenquad")
-         .withFragmentShader("core/lightmap")
+         .withVertexShader(new Identifier("renderer", "shaders/core/screenquad"))
+         .withFragmentShader(new Identifier("renderer", "shaders/core/lightmap"))
          .withUniform("LightmapInfo", UniformType.UNIFORM_BUFFER)
          .withVertexFormat(VertexFormats211.EMPTY, VertexFormat.DrawMode.TRIANGLES)
          .withDepthWrite(false)
@@ -751,7 +757,7 @@ public class RenderPipelines {
          .build()
    );
    public static final RenderPipeline.Snippet ANIMATE_SPRITE = RenderPipeline.builder()
-      .withVertexShader("core/animate_sprite")
+      .withVertexShader(new Identifier("renderer", "shaders/core/animate_sprite"))
       .withUniform("SpriteAnimationInfo", UniformType.UNIFORM_BUFFER)
       .withVertexFormat(VertexFormats211.EMPTY, VertexFormat.DrawMode.TRIANGLES)
       .withDepthWrite(false)
@@ -759,14 +765,14 @@ public class RenderPipelines {
       .buildSnippet();
    public static final RenderPipeline ANIMATE_SPRITE_BLIT = register(
       RenderPipeline.builder(ANIMATE_SPRITE)
-         .withFragmentShader("core/animate_sprite_blit")
+         .withFragmentShader(new Identifier("renderer", "shaders/core/animate_sprite_blit"))
          .withLocation("pipeline/animate_sprite_blit")
          .withSampler("Sprite")
          .build()
    );
    public static final RenderPipeline ANIMATE_SPRITE_INTERPOLATE = register(
       RenderPipeline.builder(ANIMATE_SPRITE)
-         .withFragmentShader("core/animate_sprite_interpolate")
+         .withFragmentShader(new Identifier("renderer", "shaders/core/animate_sprite_interpolate"))
          .withLocation("pipeline/animate_sprite_interpolate")
          .withSampler("CurrentSprite")
          .withSampler("NextSprite")

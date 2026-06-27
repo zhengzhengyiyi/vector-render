@@ -5,11 +5,20 @@ import net.zhengzhengyiyi.renderer.api.blaze3d.buffers.GpuBufferSlice;
 import net.zhengzhengyiyi.renderer.api.blaze3d.buffers.GpuFence;
 import net.zhengzhengyiyi.renderer.api.blaze3d.buffers.Std140SizeCalculator;
 import net.zhengzhengyiyi.renderer.api.blaze3d.systems.GpuDevice;
+import net.zhengzhengyiyi.renderer.api.blaze3d.systems.RenderPass;
 import net.zhengzhengyiyi.renderer.gl.DynamicUniforms;
 import net.zhengzhengyiyi.renderer.gl.GlBackend;
 import net.zhengzhengyiyi.renderer.gl.SamplerCache;
 import net.zhengzhengyiyi.renderer.gl.ShaderSourceGetter;
 import net.zhengzhengyiyi.renderer.fog.FogRenderer;
+import net.zhengzhengyiyi.client.render.sky.SkyRendering;
+import net.zhengzhengyiyi.client.render.cloud.CloudRenderer;
+import net.zhengzhengyiyi.client.render.border.WorldBorderRendering;
+import net.zhengzhengyiyi.client.render.weather.WeatherRendering;
+import net.zhengzhengyiyi.client.render.debug.DebugRenderer;
+import net.zhengzhengyiyi.client.render.debug.GameTestDebugRenderer;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.collection.ArrayListDeque;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,6 +39,12 @@ public final class RenderEngine {
 	private static @Nullable GpuBufferSlice shaderFog;
 	private static @Nullable FogRenderer fogRenderer;
 	private static @Nullable SamplerCache samplerCache;
+	private static @Nullable SkyRendering skyRendering;
+	private static @Nullable CloudRenderer cloudRenderer;
+	private static @Nullable WorldBorderRendering worldBorderRendering;
+	private static @Nullable WeatherRendering weatherRendering;
+	private static @Nullable DebugRenderer debugRenderer;
+	private static @Nullable GameTestDebugRenderer gameTestDebugRenderer;
 	private static final ArrayListDeque<FencedTask> pendingFences = new ArrayListDeque<>();
 
 	private RenderEngine() {
@@ -64,10 +79,43 @@ public final class RenderEngine {
 		dynamicUniforms = new DynamicUniforms();
 		samplerCache = new SamplerCache();
 		samplerCache.init();
+		
+		// Initialize 1.21.11-style renderers
+		TextureManager textureManager = MinecraftClient.getInstance().getTextureManager();
+		skyRendering = new SkyRendering(textureManager);
+		cloudRenderer = new CloudRenderer();
+		worldBorderRendering = new WorldBorderRendering();
+		weatherRendering = new WeatherRendering();
+		debugRenderer = new DebugRenderer();
+		gameTestDebugRenderer = new GameTestDebugRenderer();
 	}
 
 	/** Called on client shutdown. */
 	public static void shutdown() {
+		if (gameTestDebugRenderer != null) {
+			gameTestDebugRenderer.close();
+			gameTestDebugRenderer = null;
+		}
+		if (debugRenderer != null) {
+			debugRenderer.close();
+			debugRenderer = null;
+		}
+		if (weatherRendering != null) {
+			weatherRendering.close();
+			weatherRendering = null;
+		}
+		if (worldBorderRendering != null) {
+			worldBorderRendering.close();
+			worldBorderRendering = null;
+		}
+		if (cloudRenderer != null) {
+			cloudRenderer.close();
+			cloudRenderer = null;
+		}
+		if (skyRendering != null) {
+			skyRendering.close();
+			skyRendering = null;
+		}
 		if (samplerCache != null) {
 			samplerCache.close();
 			samplerCache = null;
@@ -134,6 +182,30 @@ public final class RenderEngine {
 		return fogRenderer;
 	}
 
+	public static @Nullable SkyRendering getSkyRendering() {
+		return skyRendering;
+	}
+
+	public static @Nullable CloudRenderer getCloudRenderer() {
+		return cloudRenderer;
+	}
+
+	public static @Nullable WorldBorderRendering getWorldBorderRendering() {
+		return worldBorderRendering;
+	}
+
+	public static @Nullable WeatherRendering getWeatherRendering() {
+		return weatherRendering;
+	}
+
+	public static @Nullable DebugRenderer getDebugRenderer() {
+		return debugRenderer;
+	}
+
+	public static @Nullable GameTestDebugRenderer getGameTestDebugRenderer() {
+		return gameTestDebugRenderer;
+	}
+
 	// -------------------------------------------------------------------------
 	// Shared uniform state
 	// -------------------------------------------------------------------------
@@ -152,6 +224,15 @@ public final class RenderEngine {
 
 	public static @Nullable GpuBufferSlice getShaderFog() {
 		return shaderFog;
+	}
+
+	public static void bindDefaultUniforms(RenderPass renderPass) {
+		if (globalSettingsUniform != null) {
+			renderPass.setUniform("GlobalSettings", globalSettingsUniform);
+		}
+		if (shaderFog != null) {
+			renderPass.setUniform("ShaderFog", shaderFog);
+		}
 	}
 
 	// -------------------------------------------------------------------------

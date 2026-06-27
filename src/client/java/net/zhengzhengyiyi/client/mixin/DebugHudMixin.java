@@ -7,6 +7,7 @@ import net.minecraft.client.gui.hud.DebugHud;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
 import net.zhengzhengyiyi.client.debug.DebugHudEntries;
+import net.zhengzhengyiyi.client.debug.DebugHudEntryVisibility;
 import net.zhengzhengyiyi.client.debug.DebugHudLines;
 import net.zhengzhengyiyi.client.debug.DebugHudProfile;
 import net.zhengzhengyiyi.client.mixin.accessor.MinecraftClientAccessor;
@@ -30,8 +31,8 @@ public class DebugHudMixin {
 			return;
 		}
 		
-		// Don't clear vanilla lines - append our configurable entries
-		// This allows vanilla debug elements to still show if not overridden
+		// Clear vanilla debug lines and replace with our configurable entries
+		lines.clear();
 		
 		DebugHudLines hudLines = new DebugHudLines();
 		World world = client.world;
@@ -44,32 +45,75 @@ public class DebugHudMixin {
 		}
 		WorldChunk chunk = clientChunk;
 		
-		// Render all visible debug entries
-		for (var entryId : profile.getVisibleEntries()) {
-			var entry = DebugHudEntries.get(entryId);
-			if (entry != null) {
-				entry.render(hudLines, world, clientChunk, chunk);
+		// Render entries based on F3 state
+		boolean reducedDebugInfo = client.hasReducedDebugInfo();
+		if (profile.isF3Enabled()) {
+			// Render all visible debug entries when F3 is pressed
+			for (var entryId : profile.getVisibleEntries()) {
+				var entry = DebugHudEntries.get(entryId);
+				if (entry != null) {
+					entry.render(hudLines, world, clientChunk, chunk);
+				}
+			}
+		} else {
+			// Render only ALWAYS_ON entries when F3 is not pressed
+			for (var entryId : DebugHudEntries.getEntries().keySet()) {
+				if (profile.getVisibility(entryId) == DebugHudEntryVisibility.ALWAYS_ON) {
+					var entry = DebugHudEntries.get(entryId);
+					if (entry != null && entry.canShow(reducedDebugInfo)) {
+						entry.render(hudLines, world, clientChunk, chunk);
+					}
+				}
 			}
 		}
 		
-		// Add priority lines first
+		// Add priority lines first (version, FPS, etc.)
 		for (String line : hudLines.getPriorityLines()) {
 			lines.add(line);
 		}
 		
-		// Add regular lines
+		// Add regular lines (position, chunk info, etc.)
 		lines.addAll(hudLines.getLines());
 	}
 
 	@Inject(method = "getRightText", at = @At("RETURN"))
 	private void renderer$append211RendererInUse(CallbackInfoReturnable<List<String>> cir) {
 		List<String> lines = cir.getReturnValue();
+		MinecraftClient client = MinecraftClient.getInstance();
+		DebugHudProfile profile = ((MinecraftClientAccessor) client).getDebugHudEntryList();
+		
+		if (profile == null) {
+			return;
+		}
+		
+		// Only show right text when F3 is enabled
+		if (!profile.isF3Enabled()) {
+			lines.clear();
+			return;
+		}
+		
+		// Clear vanilla right text and replace with fog info
+		lines.clear();
+		
+		// Add vector-render branding
 		FogRenderer fogRenderer = RenderEngine.tryGetFogRenderer();
 		if (fogRenderer != null) {
-			lines.add(5, "§3" + String.format(
+			lines.add("§3" + String.format(
 				"vector-render §6 %s",
-				MinecraftClient.getInstance().getGameVersion()
+				client.getGameVersion()
 			));
+			
+			// Add fog information (replaces chunk waiting text)
+			net.zhengzhengyiyi.renderer.fog.FogData fog = fogRenderer.getLastFogData();
+			if (fog != null) {
+				lines.add(String.format(
+					"Fog: env %.0f-%.0f chunk %.0f-%.0f",
+					fog.environmentalStart,
+					fog.environmentalEnd,
+					fog.renderDistanceStart,
+					fog.renderDistanceEnd
+				));
+			}
 		}
 	}
 }

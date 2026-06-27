@@ -99,4 +99,15 @@ public class FogRenderer implements AutoCloseable {
 		RenderSystem.setShaderFogEnd(end);
 		RenderSystem.setShaderFogShape(FogShape.CYLINDER);
 	}
+
+	public void applyWaitingChunkFog(Camera camera, float tickDelta) {
+		// Apply dense fog for waiting/unrendered chunks
+		// This makes empty chunk areas look better by using fog instead of showing nothing
+		float denseFogStart = 5.0F;
+		float denseFogEnd = 32.0F;
+		
+		RenderSystem.setShaderFogStart(denseFogStart);
+		RenderSystem.setShaderFogEnd(denseFogEnd);
+		RenderSystem.setShaderFogShape(FogShape.CYLINDER);
+	}
 }

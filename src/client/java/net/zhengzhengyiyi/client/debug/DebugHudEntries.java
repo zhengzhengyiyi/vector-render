@@ -2,7 +2,7 @@ package net.zhengzhengyiyi.client.debug;
 
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -10,23 +10,34 @@ import java.util.Map;
  * Ported from 1.21.11.
  */
 public class DebugHudEntries {
-	private static final Map<Identifier, DebugHudEntry> ENTRIES = new HashMap<>();
+	// Use LinkedHashMap to maintain insertion order for organized display
+	private static final Map<Identifier, DebugHudEntry> ENTRIES = new LinkedHashMap<>();
 
-	// Custom renderer entries
+	// Version info
+	public static final Identifier MINECRAFT_VERSION = register("minecraft_version", new MinecraftVersionDebugHudEntry());
 	public static final Identifier GAME_VERSION = register("game_version", new GameVersionDebugHudEntry());
+	
+	// Performance
+	public static final Identifier FPS = register("fps", new FpsDebugHudEntry());
+	public static final Identifier MEMORY = register("memory", new MemoryDebugHudEntry());
+	
+	// Position and chunk info
+	public static final Identifier POSITION = register("position", new PositionDebugHudEntry());
+	public static final Identifier CHUNK_INFO = register("chunk_info", new ChunkInfoDebugHudEntry());
 	public static final Identifier SECTION_POSITION = register("section_position", new SectionPositionDebugHudEntry());
+	
+	// World info
+	public static final Identifier WORLD_STRING = register("world_string", new WorldStringDebugHudEntry());
+	public static final Identifier ENTITIES = register("entities", new EntitiesDebugHudEntry());
+	
+	// Server info
+	public static final Identifier SERVER_INFO = register("server_info", new ServerInfoDebugHudEntry());
+	
+	// Fog info (replaces chunk waiting text)
 	public static final Identifier FOG_INFO = register("fog_info", new FogInfoDebugHudEntry());
 	
-	// Vanilla-style entries (replicating existing F3 elements)
-	public static final Identifier MINECRAFT_VERSION = register("minecraft_version", new MinecraftVersionDebugHudEntry());
-	public static final Identifier FPS = register("fps", new FpsDebugHudEntry());
-	public static final Identifier SERVER_INFO = register("server_info", new ServerInfoDebugHudEntry());
-	public static final Identifier MEMORY = register("memory", new MemoryDebugHudEntry());
+	// Chunk stats
 	public static final Identifier CHUNK_STATS = register("chunk_stats", new ChunkStatsDebugHudEntry());
-	public static final Identifier POSITION = register("position", new PositionDebugHudEntry());
-	public static final Identifier ENTITIES = register("entities", new EntitiesDebugHudEntry());
-	public static final Identifier WORLD_STRING = register("world_string", new WorldStringDebugHudEntry());
-	public static final Identifier CHUNK_INFO = register("chunk_info", new ChunkInfoDebugHudEntry());
 
 	private DebugHudEntries() {}
 
