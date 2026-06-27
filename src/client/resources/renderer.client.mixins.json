@@ -16,8 +16,10 @@
 		"HeldItemRendererMixin",
 		"ClientChunkManagerMixin",
 		"WorldChunkMixin",
+		"KeyboardMixin",
 		"accessor.NativeImageAccessor",
-		"accessor.VertexBufferAccessor"
+		"accessor.VertexBufferAccessor",
+		"accessor.MinecraftClientAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

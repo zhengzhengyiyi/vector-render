@@ -1,0 +1,22 @@
+{
+  "key.renderer.debug_options": "Debug Options",
+  "debug.options.title": "Debug Options",
+  "debug.entry.always_on": "Always On",
+  "debug.entry.in_f3": "In F3",
+  "debug.entry.never": "Never",
+  "debug.entry.currently.always_on": "%s is always on",
+  "debug.entry.currently.in_f3": "%s is shown in F3",
+  "debug.entry.currently.never": "%s is never shown",
+  "debug.category.text": "Text",
+  "debug.category.rendering": "Rendering",
+  "debug.category.network": "Network",
+  "debug.entry.renderer.game_version": "Game Version",
+  "debug.entry.renderer.section_position": "Section Position",
+  "debug.entry.renderer.fog_info": "Fog Info",
+  "debug.entry.renderer.minecraft_version": "Minecraft Version",
+  "debug.entry.renderer.fps": "FPS",
+  "debug.entry.renderer.server_info": "Server Info",
+  "debug.entry.renderer.memory": "Memory",
+  "debug.entry.renderer.chunk_stats": "Chunk Stats",
+  "debug.entry.renderer.position": "Position"
+}

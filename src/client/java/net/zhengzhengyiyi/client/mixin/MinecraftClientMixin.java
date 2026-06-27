@@ -2,9 +2,11 @@ package net.zhengzhengyiyi.client.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
+import net.zhengzhengyiyi.client.debug.DebugHudProfile;
 import net.zhengzhengyiyi.client.render.RenderEngine;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -14,6 +16,9 @@ public class MinecraftClientMixin {
 
 	@Shadow
 	private Window window;
+
+	@Unique
+	private DebugHudProfile debugHudEntryList;
 
 	/**
 	 * After vanilla's 1.20.4 RenderSystem.initRenderer(IZ) has run — meaning the GL
@@ -39,10 +44,18 @@ public class MinecraftClientMixin {
 			false
 		);
 		RenderEngine.initClientRendering();
+		
+		// Initialize debug HUD profile
+		this.debugHudEntryList = new DebugHudProfile(client.runDirectory);
 	}
 
 	@Inject(method = "stop", at = @At("HEAD"))
 	private void onStop(CallbackInfo ci) {
 		RenderEngine.shutdown();
+	}
+
+	@Unique
+	public DebugHudProfile getDebugHudEntryList() {
+		return this.debugHudEntryList;
 	}
 }
