@@ -161,6 +161,7 @@ public class RenderPipelines {
          .withBlend(BlendFunction.TRANSLUCENT)
          .withShaderDefine("ALPHA_CUTOUT", 0.01F)
          .withCull(false)
+         .withDepthTestFunction(DepthTestFunction.LEQUAL_DEPTH_TEST)
          .withDepthWrite(false)
          .build()
    );
@@ -170,6 +171,7 @@ public class RenderPipelines {
          .withShaderDefine("ALPHA_CUTOUT", 0.1F)
          .withBlend(BlendFunction.TRANSLUCENT)
          .withCull(false)
+         .withDepthTestFunction(DepthTestFunction.LEQUAL_DEPTH_TEST)
          .withDepthWrite(false)
          .build()
    );
@@ -178,6 +180,7 @@ public class RenderPipelines {
          .withLocation("pipeline/tripwire_terrain")
          .withShaderDefine("ALPHA_CUTOUT", 0.1F)
          .withBlend(BlendFunction.TRANSLUCENT)
+         .withDepthTestFunction(DepthTestFunction.LEQUAL_DEPTH_TEST)
          .withDepthWrite(false)
          .build()
    );
@@ -189,6 +192,7 @@ public class RenderPipelines {
          .withSampler("Sampler0")
          .withSampler("Sampler2")
          .withBlend(BlendFunction.TRANSLUCENT)
+         .withDepthTestFunction(DepthTestFunction.LEQUAL_DEPTH_TEST)
          .withDepthWrite(false)
          .withVertexFormat(VertexFormats211.POSITION_COLOR_TEXTURE_LIGHT_NORMAL, VertexFormat.DrawMode.QUADS)
          .build()

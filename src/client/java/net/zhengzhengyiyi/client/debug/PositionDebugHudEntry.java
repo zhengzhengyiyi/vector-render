@@ -15,11 +15,11 @@ public class PositionDebugHudEntry implements DebugHudEntry {
 		MinecraftClient client = MinecraftClient.getInstance();
 		if (client.getCameraEntity() != null) {
 			BlockPos blockPos = client.getCameraEntity().getBlockPos();
-			lines.add(String.format("XYZ: %.3f / %.5f / %.3f", 
+			lines.add(String.format("§fXYZ: §e%.3f §7/ §e%.5f §7/ §e%.3f", 
 				client.getCameraEntity().getX(), 
 				client.getCameraEntity().getY(), 
 				client.getCameraEntity().getZ()));
-			lines.add(String.format("Block: %d %d %d", blockPos.getX(), blockPos.getY(), blockPos.getZ()));
+			lines.add(String.format("§fBlock: §6%d §7§6%d §7§6%d", blockPos.getX(), blockPos.getY(), blockPos.getZ()));
 		}
 	}
 }

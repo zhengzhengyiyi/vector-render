@@ -14,6 +14,6 @@ public class MinecraftVersionDebugHudEntry implements DebugHudEntry {
 	public void render(DebugHudLines lines, @Nullable World world, @Nullable WorldChunk clientChunk, @Nullable WorldChunk chunk) {
 		MinecraftClient client = MinecraftClient.getInstance();
 		String version = SharedConstants.getGameVersion().getName();
-		lines.add("Minecraft " + version + " (" + client.getGameVersion() + ")");
+		lines.addPriorityLine(String.format("§bMinecraft §7%s §7(§e%s§7)", version, client.getGameVersion()));
 	}
 }

@@ -250,7 +250,8 @@ public abstract class BufferManager {
       @Override
       public void setupFramebuffer(int framebuffer, int colorAttachment, int depthAttachment, int mipLevel, int bindTarget) {
          int i = bindTarget == 0 ? '販' : bindTarget;
-         int j = i == 36008 ? GlStateManager._getInteger(36010) : GlStateManager._getInteger(36006);
+         // int j = i == 36008 ? GlStateManager._getInteger(36010) : GlStateManager._getInteger(36006);
+         int j = GlStateManager.getFrameBuffer(i);
          GlStateManager._glBindFramebuffer(i, framebuffer);
          GlStateManager._glFramebufferTexture2D(i, 36064, 3553, colorAttachment, mipLevel);
          GlStateManager._glFramebufferTexture2D(i, 36096, 3553, depthAttachment, mipLevel);
@@ -274,8 +275,10 @@ public abstract class BufferManager {
          int mask,
          int filter
       ) {
-         int i = GlStateManager._getInteger(36010);
-         int j = GlStateManager._getInteger(36006);
+         // int i = GlStateManager._getInteger(36010);
+         // int j = GlStateManager._getInteger(36006);
+         int i = GlStateManager.getFrameBuffer(36008);
+         int j = GlStateManager.getFrameBuffer(36009);
          GlStateManager._glBindFramebuffer(36008, readFramebuffer);
          GlStateManager._glBindFramebuffer(36009, writeFramebuffer);
          GlStateManager._glBlitFrameBuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);

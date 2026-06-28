@@ -163,18 +163,13 @@ public class GlCommandEncoder implements CommandEncoder {
          throw new IllegalStateException("Close the existing render pass before creating a new one!");
       } else {
          this.validateColorAttachment(gpuTexture);
-         int readFramebuffer = GlStateManager._getInteger(36010);
-         int drawFramebuffer = GlStateManager._getInteger(36006);
-         try {
-            this.backend.getBufferManager().setupFramebuffer(this.temporaryFb2, ((GlTexture)gpuTexture).glId, 0, 0, 36160);
-            GL11.glClearColor(ColorHelperCompat.getRedFloat(i), ColorHelperCompat.getGreenFloat(i), ColorHelperCompat.getBlueFloat(i), ColorHelperCompat.getAlphaFloat(i));
-            GlStateManager._disableScissorTest();
-            GlStateManager._colorMask(true, true, true, true);
-            GlStateManager._clear(16384);
-            GlStateManager._glFramebufferTexture2D(36160, 36064, 3553, 0, 0);
-         } finally {
-            this.restoreFramebuffers(readFramebuffer, drawFramebuffer);
-         }
+         this.backend.getBufferManager().setupFramebuffer(this.temporaryFb2, ((GlTexture)gpuTexture).glId, 0, 0, 36160);
+         GL11.glClearColor(ColorHelperCompat.getRedFloat(i), ColorHelperCompat.getGreenFloat(i), ColorHelperCompat.getBlueFloat(i), ColorHelperCompat.getAlphaFloat(i));
+         GlStateManager._disableScissorTest();
+         GlStateManager._colorMask(true, true, true, true);
+         GlStateManager._clear(16384);
+         GlStateManager._glFramebufferTexture2D(36160, 36064, 3553, 0, 0);
+         GlStateManager._glBindFramebuffer(36160, 0);
       }
    }
 
@@ -185,20 +180,15 @@ public class GlCommandEncoder implements CommandEncoder {
       } else {
          this.validateColorAttachment(gpuTexture);
          this.validateDepthAttachment(gpuTexture2);
-         int readFramebuffer = GlStateManager._getInteger(36010);
-         int drawFramebuffer = GlStateManager._getInteger(36006);
-         try {
-            int j = ((GlTexture)gpuTexture).getOrCreateFramebuffer(this.backend.getBufferManager(), gpuTexture2);
-            GlStateManager._glBindFramebuffer(36160, j);
-            GlStateManager._disableScissorTest();
-            GL11.glClearDepth(d);
-            GL11.glClearColor(ColorHelperCompat.getRedFloat(i), ColorHelperCompat.getGreenFloat(i), ColorHelperCompat.getBlueFloat(i), ColorHelperCompat.getAlphaFloat(i));
-            GlStateManager._depthMask(true);
-            GlStateManager._colorMask(true, true, true, true);
-            GlStateManager._clear(16640);
-         } finally {
-            this.restoreFramebuffers(readFramebuffer, drawFramebuffer);
-         }
+         int j = ((GlTexture)gpuTexture).getOrCreateFramebuffer(this.backend.getBufferManager(), gpuTexture2);
+         GlStateManager._glBindFramebuffer(36160, j);
+         GlStateManager._disableScissorTest();
+         GL11.glClearDepth(d);
+         GL11.glClearColor(ColorHelperCompat.getRedFloat(i), ColorHelperCompat.getGreenFloat(i), ColorHelperCompat.getBlueFloat(i), ColorHelperCompat.getAlphaFloat(i));
+         GlStateManager._depthMask(true);
+         GlStateManager._colorMask(true, true, true, true);
+         GlStateManager._clear(16640);
+         GlStateManager._glBindFramebuffer(36160, 0);
       }
    }
 
@@ -210,21 +200,16 @@ public class GlCommandEncoder implements CommandEncoder {
          this.validateColorAttachment(gpuTexture);
          this.validateDepthAttachment(gpuTexture2);
          this.validate(gpuTexture, j, k, l, m);
-         int readFramebuffer = GlStateManager._getInteger(36010);
-         int drawFramebuffer = GlStateManager._getInteger(36006);
-         try {
-            int n = ((GlTexture)gpuTexture).getOrCreateFramebuffer(this.backend.getBufferManager(), gpuTexture2);
-            GlStateManager._glBindFramebuffer(36160, n);
-            GlStateManager._scissorBox(j, k, l, m);
-            GlStateManager._enableScissorTest();
-            GL11.glClearDepth(d);
-            GL11.glClearColor(ColorHelperCompat.getRedFloat(i), ColorHelperCompat.getGreenFloat(i), ColorHelperCompat.getBlueFloat(i), ColorHelperCompat.getAlphaFloat(i));
-            GlStateManager._depthMask(true);
-            GlStateManager._colorMask(true, true, true, true);
-            GlStateManager._clear(16640);
-         } finally {
-            this.restoreFramebuffers(readFramebuffer, drawFramebuffer);
-         }
+         int n = ((GlTexture)gpuTexture).getOrCreateFramebuffer(this.backend.getBufferManager(), gpuTexture2);
+         GlStateManager._glBindFramebuffer(36160, n);
+         GlStateManager._scissorBox(j, k, l, m);
+         GlStateManager._enableScissorTest();
+         GL11.glClearDepth(d);
+         GL11.glClearColor(ColorHelperCompat.getRedFloat(i), ColorHelperCompat.getGreenFloat(i), ColorHelperCompat.getBlueFloat(i), ColorHelperCompat.getAlphaFloat(i));
+         GlStateManager._depthMask(true);
+         GlStateManager._colorMask(true, true, true, true);
+         GlStateManager._clear(16640);
+         GlStateManager._glBindFramebuffer(36160, 0);
       }
    }
 
@@ -250,26 +235,16 @@ public class GlCommandEncoder implements CommandEncoder {
          throw new IllegalStateException("Close the existing render pass before creating a new one!");
       } else {
          this.validateDepthAttachment(gpuTexture);
-         int readFramebuffer = GlStateManager._getInteger(36010);
-         int drawFramebuffer = GlStateManager._getInteger(36006);
-         try {
-            this.backend.getBufferManager().setupFramebuffer(this.temporaryFb2, 0, ((GlTexture)gpuTexture).glId, 0, 36160);
-            GL11.glDrawBuffer(0);
-            GL11.glClearDepth(d);
-            GlStateManager._depthMask(true);
-            GlStateManager._disableScissorTest();
-            GlStateManager._clear(256);
-            GL11.glDrawBuffer(36064);
-            GlStateManager._glFramebufferTexture2D(36160, 36096, 3553, 0, 0);
-         } finally {
-            this.restoreFramebuffers(readFramebuffer, drawFramebuffer);
-         }
+         this.backend.getBufferManager().setupFramebuffer(this.temporaryFb2, 0, ((GlTexture)gpuTexture).glId, 0, 36160);
+         GL11.glDrawBuffer(0);
+         GL11.glClearDepth(d);
+         GlStateManager._depthMask(true);
+         GlStateManager._disableScissorTest();
+         GlStateManager._clear(256);
+         GL11.glDrawBuffer(36064);
+         GlStateManager._glFramebufferTexture2D(36160, 36096, 3553, 0, 0);
+         GlStateManager._glBindFramebuffer(36160, 0);
       }
-   }
-
-   private void restoreFramebuffers(int readFramebuffer, int drawFramebuffer) {
-      GlStateManager._glBindFramebuffer(36008, readFramebuffer);
-      GlStateManager._glBindFramebuffer(36009, drawFramebuffer);
    }
 
    private void validateColorAttachment(GpuTexture texture) {
@@ -619,22 +594,17 @@ public class GlCommandEncoder implements CommandEncoder {
             throw new UnsupportedOperationException("Textures with multiple depths or layers are not yet supported for copying");
          } else {
             GlStateManager.clearGlErrors();
-            int readFramebuffer = GlStateManager._getInteger(36010);
-            int drawFramebuffer = GlStateManager._getInteger(36006);
-            try {
-               this.backend.getBufferManager().setupFramebuffer(this.temporaryFb1, ((GlTexture)gpuTexture).getGlId(), 0, i, 36008);
-               GlStateManager._glBindBuffer(35051, ((GlGpuBuffer)gpuBuffer).id);
-               GlStateManager._pixelStore(3330, m);
-               GlStateManager._readPixels(j, k, m, n, GlConst.toGlExternalId(gpuTexture.getFormat()), GlConst.toGlType(gpuTexture.getFormat()), l);
-               RenderEngine.queueFencedTask(runnable);
-               GlStateManager._glFramebufferTexture2D(36008, 36064, 3553, 0, i);
-               GlStateManager._glBindBuffer(35051, 0);
-               int o = GlStateManager._getError();
-               if (o != 0) {
-                  throw new IllegalStateException("Couldn't perform copyTobuffer for texture " + gpuTexture.getLabel() + ": GL error " + o);
-               }
-            } finally {
-               this.restoreFramebuffers(readFramebuffer, drawFramebuffer);
+            this.backend.getBufferManager().setupFramebuffer(this.temporaryFb1, ((GlTexture)gpuTexture).getGlId(), 0, i, 36008);
+            GlStateManager._glBindBuffer(35051, ((GlGpuBuffer)gpuBuffer).id);
+            GlStateManager._pixelStore(3330, m);
+            GlStateManager._readPixels(j, k, m, n, GlConst.toGlExternalId(gpuTexture.getFormat()), GlConst.toGlType(gpuTexture.getFormat()), l);
+            RenderEngine.queueFencedTask(runnable);
+            GlStateManager._glFramebufferTexture2D(36008, 36064, 3553, 0, i);
+            GlStateManager._glBindFramebuffer(36008, 0);
+            GlStateManager._glBindBuffer(35051, 0);
+            int o = GlStateManager._getError();
+            if (o != 0) {
+               throw new IllegalStateException("Couldn't perform copyTobuffer for texture " + gpuTexture.getLabel() + ": GL error " + o);
             }
          }
       } else {

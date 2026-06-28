@@ -11,7 +11,7 @@ public class WorldStringDebugHudEntry implements DebugHudEntry {
 	@Override
 	public void render(DebugHudLines lines, @Nullable World world, @Nullable WorldChunk clientChunk, @Nullable WorldChunk chunk) {
 		if (world != null) {
-			lines.add(world.asString());
+			lines.add("§5" + world.asString());
 		}
 	}
 }

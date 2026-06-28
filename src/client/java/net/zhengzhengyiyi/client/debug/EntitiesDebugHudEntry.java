@@ -15,7 +15,7 @@ public class EntitiesDebugHudEntry implements DebugHudEntry {
 		if (client.world != null) {
 			String particleDebug = client.particleManager.getDebugString();
 			int entityCount = client.world.getRegularEntityCount();
-			lines.add("P: " + particleDebug + ". T: " + entityCount);
+			lines.add(String.format("§dP: §e%s§7. §dT: §e%d", particleDebug, entityCount));
 		}
 	}
 }

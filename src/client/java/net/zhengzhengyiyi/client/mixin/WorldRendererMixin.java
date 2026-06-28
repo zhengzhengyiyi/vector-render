@@ -97,21 +97,19 @@ public abstract class WorldRendererMixin {
 		}
 	}
 
-	@Redirect(
-		method = "render",
-		at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/client/render/WorldRenderer;renderWeather(Lnet/minecraft/client/render/LightmapTextureManager;FDDD)V"
-		)
-	)
+	// @Redirect(
+	// 	method = "render",
+	// 	at = @At(
+	// 		value = "INVOKE",
+	// 		target = "Lnet/minecraft/client/render/WorldRenderer;renderWeather(Lnet/minecraft/client/render/LightmapTextureManager;FDDD)V"
+	// 	)
+	// )
+	@Inject(method="renderWeather", at=@At("HEAD"), cancellable = true)
 	private void renderer$renderWeather(
-		WorldRenderer worldRenderer,
-		LightmapTextureManager lightmapTextureManager,
-		float tickDelta,
-		double cameraX,
-		double cameraY,
-		double cameraZ
+		LightmapTextureManager manager, float tickDelta, double cameraX, double cameraY, double cameraZ,
+		CallbackInfo ci
 	) {
+		ci.cancel();
 		if (RenderEngine.getWeatherRendering() != null) {
 			RenderEngine.getWeatherRendering().render(tickDelta, cameraX, cameraY, cameraZ);
 		}

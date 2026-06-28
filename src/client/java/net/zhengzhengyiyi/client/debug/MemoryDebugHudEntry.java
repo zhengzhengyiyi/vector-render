@@ -14,6 +14,6 @@ public class MemoryDebugHudEntry implements DebugHudEntry {
 		long usedMemory = (runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024;
 		long totalMemory = runtime.totalMemory() / 1024 / 1024;
 		long maxMemory = runtime.maxMemory() / 1024 / 1024;
-		lines.add(String.format("Memory: %dMB / %dMB (max: %dMB)", usedMemory, totalMemory, maxMemory));
+		lines.add(String.format("§bMemory: §c%dMB §7/ §c%dMB §7(max: §c%dMB§7)", usedMemory, totalMemory, maxMemory));
 	}
 }

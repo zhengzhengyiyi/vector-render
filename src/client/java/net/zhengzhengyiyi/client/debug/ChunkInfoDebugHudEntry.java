@@ -19,10 +19,10 @@ public class ChunkInfoDebugHudEntry implements DebugHudEntry {
 			BlockPos blockPos = client.getCameraEntity().getBlockPos();
 			ChunkPos chunkPos = new ChunkPos(blockPos);
 			
-			lines.add(String.format("Block: %d %d %d [%d %d %d]", 
+			lines.add(String.format("§fBlock: §6%d §7§6%d §7§6%d §7[§a%d §7§a%d §7§a%d§7]", 
 				blockPos.getX(), blockPos.getY(), blockPos.getZ(),
 				blockPos.getX() & 15, blockPos.getY() & 15, blockPos.getZ() & 15));
-			lines.add(String.format("Chunk: %d %d %d [%d %d in r.%d.%d.mca]",
+			lines.add(String.format("§fChunk: §9%d §7§9%d §7§9%d §7[§a%d §7§a%d §7in §cr.§c%d§7.§c%d§7.mca§7]",
 				chunkPos.x, ChunkSectionPos.getSectionCoord(blockPos.getY()), chunkPos.z,
 				chunkPos.getRegionRelativeX(), chunkPos.getRegionRelativeZ(),
 				chunkPos.getRegionX(), chunkPos.getRegionZ()));

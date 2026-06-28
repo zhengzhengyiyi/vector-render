@@ -22,10 +22,10 @@ public class ServerInfoDebugHudEntry implements DebugHudEntry {
 		float rx = connection.getAveragePacketsReceived();
 		
 		if (integratedServer != null) {
-			lines.add(String.format("Integrated server @ %.1f ms, %.0f tx, %.0f rx", 
+			lines.add(String.format("§cIntegrated server §7@ §e%.1f ms§7, §e%.0f tx§7, §e%.0f rx§7", 
 				integratedServer.getAverageTickTime(), tx, rx));
 		} else {
-			lines.add(String.format("\"%s\" server, %.0f tx, %.0f rx", 
+			lines.add(String.format("§c\"%s\" §7server, §e%.0f tx§7, §e%.0f rx§7", 
 				networkHandler.getBrand(), tx, rx));
 		}
 	}

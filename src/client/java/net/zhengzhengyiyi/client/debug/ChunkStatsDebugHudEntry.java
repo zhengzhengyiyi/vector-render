@@ -12,7 +12,7 @@ public class ChunkStatsDebugHudEntry implements DebugHudEntry {
 	public void render(DebugHudLines lines, @Nullable World world, @Nullable WorldChunk clientChunk, @Nullable WorldChunk chunk) {
 		if (world != null) {
 			int loadedChunks = world.getChunkManager().getLoadedChunkCount();
-			lines.add(String.format("Chunks: %d loaded", loadedChunks));
+			lines.add(String.format("§aChunks: §e%d §7loaded", loadedChunks));
 		}
 	}
 }

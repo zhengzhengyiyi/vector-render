@@ -76,9 +76,9 @@ public class DebugHudProfile {
 
 	private void setToDefault() {
 		this.visibilityMap = new HashMap<>();
-		// Set default visibility for all registered entries
+		// Set default visibility for all registered entries to ALWAYS_ON
 		for (Identifier id : DebugHudEntries.getEntries().keySet()) {
-			this.visibilityMap.put(id, DebugHudEntryVisibility.IN_OVERLAY);
+			this.visibilityMap.put(id, DebugHudEntryVisibility.ALWAYS_ON);
 		}
 	}
 

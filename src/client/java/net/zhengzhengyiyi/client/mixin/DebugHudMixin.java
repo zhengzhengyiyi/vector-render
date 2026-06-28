@@ -86,12 +86,6 @@ public class DebugHudMixin {
 			return;
 		}
 		
-		// Only show right text when F3 is enabled
-		if (!profile.isF3Enabled()) {
-			lines.clear();
-			return;
-		}
-		
 		// Clear vanilla right text and replace with fog info
 		lines.clear();
 		
